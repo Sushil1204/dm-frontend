@@ -1,0 +1,251 @@
+@import "tailwindcss";
+
+/*
+ * Daman Plastics — semantic design tokens.
+ * Two complete presets selected with data-theme on <html>.
+ * Components must only use these semantic tokens (never literal brand hex).
+ */
+
+:root,
+[data-theme="navy"] {
+  --background: #f5f5f1;
+  --foreground: #14285f;
+  --surface: #ffffff;
+  --surface-muted: #e9ebe7;
+  --primary: #102a72;
+  --primary-foreground: #ffffff;
+  --accent: #18a94a;
+  --accent-foreground: #ffffff;
+  --muted: #667085;
+  --border: #d9deda;
+  --footer: #0b1745;
+  --focus: #18a94a;
+}
+
+[data-theme="teal"] {
+  --background: #f3f6f5;
+  --foreground: #17242a;
+  --surface: #ffffff;
+  --surface-muted: #e6efed;
+  --primary: #142f3a;
+  --primary-foreground: #ffffff;
+  --accent: #1d8b83;
+  --accent-foreground: #ffffff;
+  --muted: #647579;
+  --border: #d5e0dd;
+  --footer: #10242c;
+  --focus: #1d8b83;
+}
+
+/* Molecular marks from the logo — restrained, theme-independent accents.
+   Used only as material-family markers and small diagram details. */
+:root {
+  --mol-green: #18a94a;
+  --mol-purple: #7626a8;
+  --mol-orange: #f07818;
+  --mol-yellow: #e6c51a;
+
+  --radius-card: 10px;
+  --radius-button: 8px;
+
+  --header-height: 84px;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Token-to-Tailwind mapping (Tailwind v4). */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-footer: var(--footer);
+  --color-mol-green: var(--mol-green);
+  --color-mol-purple: var(--mol-purple);
+  --color-mol-orange: var(--mol-orange);
+  --color-mol-yellow: var(--mol-yellow);
+
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+
+  --text-display: clamp(3rem, 6.5vw, 6.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 600;
+
+  --text-h1: clamp(2.75rem, 5vw, 5.25rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(2rem, 3.5vw, 3.5rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: clamp(1.35rem, 2vw, 1.75rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+
+  --text-lead: clamp(1.125rem, 1.4vw, 1.25rem);
+  --text-lead--line-height: 1.65;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--letter-spacing: 0.12em;
+
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.5;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* Layout shells — keep alignment rules here, spacing on elements. */
+  .shell {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  .shell-wide {
+    width: 100%;
+    max-width: 1500px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .shell,
+    .shell-wide {
+      padding-inline: 32px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .shell,
+    .shell-wide {
+      padding-inline: 56px;
+    }
+  }
+
+  /* Editorial eyebrow: mono, tracked, sentence-case labels stay readable. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hairline {
+    border-top: 1px solid var(--border);
+  }
+
+  /* Material-family marker dot (colour never carries meaning alone —
+     always paired with the category name in text). */
+  .marker {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--marker, var(--mol-green));
+    flex: none;
+  }
+
+  [data-accent="green"] { --marker: var(--mol-green); }
+  [data-accent="purple"] { --marker: var(--mol-purple); }
+  [data-accent="orange"] { --marker: var(--mol-orange); }
+  [data-accent="yellow"] { --marker: var(--mol-yellow); }
+  [data-accent="navy"] { --marker: var(--primary); }
+
+  .skip-link {
+    position: absolute;
+    left: 16px;
+    top: -64px;
+    z-index: 100;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 10px 16px;
+    border-radius: var(--radius-button);
+    font-size: 0.9rem;
+    transition: top 160ms var(--ease-out-soft);
+  }
+
+  .skip-link:focus-visible {
+    top: 16px;
+  }
+}
+
+/* Global reduced-motion floor. The Motion library honours
+   prefers-reduced-motion too; this catches CSS-driven motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
