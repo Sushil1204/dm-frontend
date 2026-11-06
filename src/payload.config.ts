@@ -73,11 +73,22 @@ export default buildConfig({
     },
   }),
   sharp,
+  upload: {
+    // Payload's default fileSize limit is 20 MB, which rejects real photos and any
+    // video before storage is even reached. Browsers upload straight to Vercel Blob
+    // (clientUploads below), so only the Blob store's own limits apply.
+    limits: { fileSize: 100 * 1024 * 1024 },
+    abortOnLimit: true,
+  },
   plugins: [
     vercelBlobStorage({
       // Enabled only when running against a Vercel Blob store (production/preview).
       // Locally the token is absent, so uploads keep using disk for development.
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      // Uploads go browser → Vercel Blob directly. Without this, every file is proxied
+      // through a Vercel Function, whose request body limit (4.5 MB) rejects normal
+      // photos and all videos.
+      clientUploads: true,
       collections: {
         // Public content: serve straight from the Blob CDN (images, video streaming).
         media: { disablePayloadAccessControl: true },
